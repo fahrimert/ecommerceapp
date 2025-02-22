@@ -1,0 +1,139 @@
+
+generator client {
+  provider = "prisma-client-js"
+
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comments{
+  id        String   @id @default(uuid())
+  comment String
+  commentId String
+  product Product @relation(fields: [commentId],references: [id],onDelete: Cascade)
+  whoDidİtıd String
+  whomadeit ClientUsers @relation(fields: [whoDidİtıd],references: [id],onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Categories {
+  id        String   @id @default(uuid())
+  name       String
+  order   Int
+  imageOfCategory  ImageOfCategoryMainPage[]
+  anasayfa Boolean  @default(false)
+  createdAt DateTime @default(now())
+  products Product[] 
+  updatedAt DateTime @updatedAt
+}
+model ImageOfCategoryMainPage{
+  id String @id @default(uuid())
+  categoryId String
+  CategoryName Categories @relation(fields: [categoryId],references: [id],onDelete: Cascade)
+  url String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+model Image{
+  id String @id @default(uuid())
+  productId String
+  product Product @relation(fields: [productId],references: [id],onDelete: Cascade)
+  url String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+}
+
+
+//kategorinin productları olduğu gibi userin da liked songsları var 
+model Product{
+  id String @id @default(uuid())
+  categoryId String
+  category Categories @relation(fields: [categoryId],references: [id])
+  order Int
+  name String
+  price Decimal 
+  anasayfa Boolean  @default(false)
+  quantity Int @default(0)
+  ek  Json?
+  stok Int
+  comments Comments[] 
+
+  iadeSarti String
+  isFeatured Boolean @default(false)
+  isArchived Boolean @default(false)
+  images Image[]
+  orderItems OrderItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+    
+}
+
+
+model Order {
+  id String @id @default(uuid())
+  orderItems OrderItem[]
+  isPaid Boolean @default(false)
+  madePersonsId String @default("")
+  phone String @default("")
+  address String @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem{
+  id String @id @default(uuid())
+  orderId String
+  order Order @relation(fields: [orderId],references: [id])
+  productId String 
+  product Product @relation(fields: [productId],references: [id])
+}
+
+model ClientUsers {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String          @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  address Address[]
+  comments Comments[]
+  detailOfUser ClientUserDetail[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model ClientUserDetail {
+  id String          @id @default(cuid())
+  educationsituation String
+  surname String
+  detailId String
+  ClientUserDetail ClientUsers @relation(fields: [detailId], references: [id], onDelete: Cascade)
+  phone Decimal
+  occupation String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Address {
+  id        String   @id @default(uuid())
+  addressTitle String
+  BuyerName String
+  BuyerNumber Decimal
+  AddressDescription  String
+  country String 
+  county String
+  zipcode Decimal
+  addressId String
+  user ClientUsers @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

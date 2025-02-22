@@ -1,0 +1,19 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "react/no-unescaped-entities": "off",
+    "@next/next/no-page-custom-font": "off",
+    "import/no-anonymous-default-export": ["error", {
+      "allowArray": false,
+      "allowArrowFunction": false,
+      "allowAnonymousClass": false,
+      "allowAnonymousFunction": false,
+      "allowCallExpression": false, // backward compatibility -> e.g. export default foo(bar)
+      "allowNew": false,
+      "allowLiteral": false,
+      "allowObject": true
+    }]
+  
+  }
+  
+}

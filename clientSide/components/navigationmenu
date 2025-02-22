@@ -1,0 +1,57 @@
+    <div className=" w-fit justify-center items-center max-lg:hidden">
+        <NavigationMenu>
+          <NavigationMenuList>
+      
+            {formattedProducts.map((item,index) => (
+              <NavigationMenuItem key={index}>
+                <div>
+                  <NavigationMenuTrigger>
+                    <Link
+                      href={`/${item.categoryName}--${item.id}`}
+                      key={item.id}
+                      className={cn(
+                        "transition-colors hover:text-primary font-satoshi font-[16px ]  font-medium spacing tracking-[-0.32px]",
+                        path === `/${item.categoryName}--${item.id}`
+                          ? " text-black dark:text-white"
+                          : "text-muted-foreground"
+                      )}
+                    >
+                      <div
+                        className={` md:w-fit h-full text-[16px]   flex items-center tracking-[-0.32px] ${satoshi_regular}  font-medium `}
+                      >
+                        {item.categoryName}
+                      </div>
+                    </Link>
+                  </NavigationMenuTrigger>
+{/* kategoriye sahip ürünlerin malzeme özellikleri  */}
+          
+              
+                </div>
+              </NavigationMenuItem>
+            ))}
+    <NavigationMenuItem>
+                <div>
+                  <NavigationMenuTrigger>
+                    <Link
+                      href={`/new-products`}
+                      key={`/new-products`}
+                      className={cn(
+                        "transition-colors hover:text-primary font-satoshi font-[16px ]  font-medium spacing tracking-[-0.32px]",
+                        path === `/new-products`
+                          ? " text-black dark:text-white"
+                          : "text-muted-foreground"
+                      )}
+                    >
+                      <div
+                        className={` md:w-fit h-full text-[16px]   flex items-center tracking-[-0.32px] ${satoshi_regular}  font-medium `}
+                      >
+                        Çok Satanlar
+                      </div>
+                    </Link>
+                  </NavigationMenuTrigger>
+                 
+                </div>
+              </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
